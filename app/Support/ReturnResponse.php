@@ -23,7 +23,7 @@ trait ReturnResponse
     public function respondWithError(string $errorCode, int $statusCode = 400, ?string $message = null, array $metadata = []): JsonResponse
     {
         $payload = [
-            'message'    => $message,
+            'message' => $message,
             'error_code' => $errorCode,
         ];
 
@@ -42,14 +42,14 @@ trait ReturnResponse
     public function respondWithResource(JsonResource $resource, $statusCode = 200): JsonResponse
     {
         return response()->json([
-            'data' => $resource
+            'data' => $resource,
         ], $statusCode);
     }
 
     public function respondWithData(mixed $data = [], int $statusCode = 200): JsonResponse
     {
         return response()->json([
-            'data' => $data
+            'data' => $data,
         ], $statusCode);
     }
 }
