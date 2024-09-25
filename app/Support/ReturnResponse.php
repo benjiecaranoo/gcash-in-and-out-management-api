@@ -2,13 +2,14 @@
 
 namespace App\Support;
 
+use App\Enums\ErrorCodes;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 trait ReturnResponse
 {
-    public function respondWithToken(string $token, User $user, $statusCode = 200): JsonResponse
+    public function respondWithToken(string $token, $user, $statusCode = 200): JsonResponse
     {
         return response()->json([
             'data' => [
@@ -23,7 +24,7 @@ trait ReturnResponse
     public function respondWithError(string $errorCode, int $statusCode = 400, ?string $message = null, array $metadata = []): JsonResponse
     {
         $payload = [
-            'message' => $message,
+            'message' => $message ?: ErrorCodes::getDescription($errorCode),
             'error_code' => $errorCode,
         ];
 
