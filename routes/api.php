@@ -28,3 +28,9 @@ Route::group(['prefix' => 'v1'], function () {
             ->name('me');
     });
 });
+
+Route::post('test', function (Request $request) {
+    return response()->json([
+        'message' => $request->all(),
+    ]);
+});
