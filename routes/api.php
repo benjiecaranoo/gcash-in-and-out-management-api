@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\V1\Transaction\TransactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,12 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('/me', [AuthController::class, 'me'])
             ->middleware('auth:sanctum')
             ->name('me');
+
+        Route::resource('/transactions', TransactionController::class)
+            ->only(['index', 'store', 'show', 'destroy', 'update'])
+            ->middleware('auth:sanctum');
+
+       
     });
 });
 
