@@ -34,9 +34,9 @@ class TransactionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTransactionRequest $request)
+    public function store(StoreTransactionRequest $request, #[CurrentUser()] User $user)
     {
-        $transaction = Transaction::create($request->validated());
+        $transaction = Transaction::create(array_merge($request->validated(), ['user_id' => $user->id]));
 
         return new TransactionResource($transaction);
     }

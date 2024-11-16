@@ -2,8 +2,13 @@
 
 namespace App\Models;
 
+use App\Observers\TransactionObserver;
+use App\Policies\TransactionPolicy;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
+// #[ObservedBy(TransactionObserver::class)]
 
 class Transaction extends Model
 {
@@ -17,20 +22,11 @@ class Transaction extends Model
         'phone_number',
         'load_service',
         'description',
+        'user_id',
     ];
 
     // add api guard to the model
     protected $guard = 'api';
-
-    // add boot method to automatically set user_id to the authenticated user
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($transaction) {
-            $transaction->user_id = auth()->id();
-        });
-    }
 
     public function owner()
     {
